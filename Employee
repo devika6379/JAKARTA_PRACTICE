@@ -1,0 +1,67 @@
+import java.util.*;
+
+class Employee {
+    int empId;
+    String empName;
+    String empAddress;
+    String empDesignation;
+    String empDepartment;
+    String empPhoneNo;
+    double empBasicPay;
+
+    // Constructor
+    public Employee(int empId, String empName, String empAddress, String empDesignation,
+                    String empDepartment, String empPhoneNo, double empBasicPay) {
+        this.empId = empId;
+        this.empName = empName;
+        this.empAddress = empAddress;
+        this.empDesignation = empDesignation;
+        this.empDepartment = empDepartment;
+        this.empPhoneNo = empPhoneNo;
+        this.empBasicPay = empBasicPay;
+    }
+
+    // Method to calculate total salary
+    public double calculateTotalSalary() {
+        double hra = 0.10 * empBasicPay; // HRA - 10% of Basic Pay
+        double da = 0.02 * empBasicPay;  // DA - 2% of Basic Pay
+        double ta = 0.02 * empBasicPay;  // TA - 2% of Basic Pay
+        return empBasicPay + hra + da + ta; // Total Salary
+    }
+
+    @Override
+    public String toString() {
+        return "Employee ID: " + empId +
+               ", Name: " + empName +
+               ", Department: " + empDepartment +
+               ", Total Salary: " + calculateTotalSalary();
+    }
+}
+
+public class EmployeeManagement {
+    public static void main(String[] args) {
+        // Create a list of employees
+        List<Employee> employees = new ArrayList<>();
+        employees.add(new Employee(1, "Alice", "123 Street A", "Manager", "HR", "123-456-7890", 50000));
+        employees.add(new Employee(2, "Bob", "456 Street B", "Executive", "Finance", "123-456-7891", 40000));
+        employees.add(new Employee(3, "Charlie", "789 Street C", "Manager", "HR", "123-456-7892", 60000));
+        employees.add(new Employee(4, "David", "101 Street D", "Executive", "Finance", "123-456-7893", 45000));
+        employees.add(new Employee(5, "Eve", "202 Street E", "Analyst", "IT", "123-456-7894", 55000));
+
+        // Find the employee with the highest salary in each department
+        Map<String, Employee> highestSalaryEmployees = new HashMap<>();
+
+        for (Employee emp : employees) {
+            double totalSalary = emp.calculateTotalSalary();
+            if (!highestSalaryEmployees.containsKey(emp.empDepartment) ||
+                totalSalary > highestSalaryEmployees.get(emp.empDepartment).calculateTotalSalary()) {
+                highestSalaryEmployees.put(emp.empDepartment, emp);
+            }
+        }
+
+        // Print the results
+        System.out.println("Employees with the highest salary in each department:");
+        for (Employee emp : highestSalaryEmployees.values()) {
+            System.out.println(emp);
+        }
+    }
