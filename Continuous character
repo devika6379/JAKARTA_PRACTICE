@@ -1,0 +1,39 @@
+public class ContinuousCharacterCounter {
+
+    public static void main(String[] args) {
+        String inputString = "aaabbbccddeeefffggg"; // Example input
+        int result = countRepeatedCharacters(inputString);
+        System.out.println("Count of characters occurring more than twice continuously: " + result);
+    }
+
+    public static int countRepeatedCharacters(String s) {
+        if (s == null || s.isEmpty()) { // Check if the string is empty or null
+            return 0;
+        }
+
+        int count = 0; // To store the count of characters occurring more than twice
+        int i = 0; // Index to traverse the string
+        int length = s.length();
+
+        while (i < length) {
+            char currentChar = s.charAt(i);
+            int currentCount = 1; // Count occurrences of the current character
+
+            // Count how many times the current character occurs consecutively
+            while (i + 1 < length && s.charAt(i + 1) == currentChar) {
+                currentCount++;
+                i++;
+            }
+
+            // If the count is more than 2, increment the result count
+            if (currentCount > 2) {
+                count++;
+            }
+
+            // Move to the next character
+            i++;
+        }
+
+        return count; // Return the total count
+    }
+}
