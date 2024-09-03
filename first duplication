@@ -1,0 +1,33 @@
+import java.util.*;
+
+public class FirstDuplicateDifference {
+    public static int findDifference(int[] A) {
+        int n = A.length;
+        Map<Integer, Integer> indexMap = new HashMap<>();
+        int firstDuplicate = -1;
+        int lastDuplicate = -1;
+
+        for (int i = 0; i < n; i++) {
+            if (indexMap.containsKey(A[i])) {
+                if (firstDuplicate == -1) {
+                    firstDuplicate = indexMap.get(A[i]);
+                }
+                lastDuplicate = i;
+            } else {
+                indexMap.put(A[i], i);
+            }
+        }
+
+        if (firstDuplicate == -1 || lastDuplicate == -1) {
+            return -1; // No duplicate elements found
+        }
+
+        return lastDuplicate - firstDuplicate;
+    }
+
+    public static void main(String[] args) {
+        int[] A = {1, 2, 3, 4, 5, 2, 6, 7, 8, 9, 10, 8};
+        int difference = findDifference(A);
+        System.out.println("Difference between first and last occurrence of first duplicate element: " + difference);
+    }
+}
